@@ -16,11 +16,10 @@ const App: React.FC = () => {
       </header>
       <div className="Plot-Display">
         <TimelinePlot/>
-      </div>
-
-      <div className="External-UI">
         <Button className="Button">Import Data</Button>
       </div>
+
+      
 
       <footer className="App-footer">
         <p>Application powered by <code>React</code></p>
