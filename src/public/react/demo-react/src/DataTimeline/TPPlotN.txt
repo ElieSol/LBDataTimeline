@@ -1,0 +1,243 @@
+/*
+  Script to render the timeline graph
+*/
+import * as React from 'react';
+import {createContainer, VictoryLabel, VictoryGroup, VictoryTooltip, VictoryVoronoiContainer, VictoryLegend, VictoryTheme, VictoryScatter, VictoryChart, VictoryLine, VictoryAxis, VictoryBrushContainer} from 'victory';
+import 'bootstrap/dist/css/bootstrap.css';
+import './TPStyle.css'
+import _ from 'lodash';
+
+export type TPPlotNProps = {
+    data?: any;
+    width?: number;
+    maxValue: number;
+}
+
+export type TPPNState = {
+    maxValue: number;
+    data: any;
+    dataSets:[{}];
+    dataSetsToRender:[{}];
+    zoomDomain: any;
+}
+
+let source:any;
+
+
+// Class Definition
+
+export class TPPlotN extends React.Component<TPPlotNProps, TPPNState>{
+    
+
+    public constructor(props: TPPlotNProps) {
+        super(props);
+
+      
+        this.state = {
+            maxValue: 0,
+            data: [{}],
+            dataSets: [{}],
+            dataSetsToRender:[{}],
+            zoomDomain: { x: [1,4] }
+        }; 
+    }
+
+    public static defaultProps = {
+      data: {},
+      dataSets: [],
+      dataSetsToRender:[],
+      width: window.innerWidth + "px",
+      height: window.innerHeight + "px"
+    }
+
+    /*
+        Props State Management 
+    */
+    handleZoom(domain: any) {
+        this.setState({ zoomDomain: domain });
+    }
+
+    componentDidMount(){
+      console.log("GRAPH DID MOUNT");
+    }
+
+    public formatDataForVictoryChart(inputlist:any){
+        let outputlist:any=[];
+        for(let value in inputlist){
+          outputlist.push({a: value, b:inputlist[value]});
+        }
+        return outputlist;
+      }
+
+    private getMaxValue(inputlist:any){
+    let max = 0;
+    for(let val in inputlist){
+      if(inputlist[val]>max){
+        max = inputlist[val];
+      }
+    }
+    return max;
+    }
+
+    render() {
+      const VictoryZoomVoronoiContainer = createContainer("zoom", "voronoi");
+
+      let lengthOfDS = (this.state.dataSetsToRender).length;
+
+      console.log("Length of DS = "+lengthOfDS);
+
+      //
+      // Style
+      //
+
+      let color_f1 = "#3366cc";
+
+      let listTickValues = Array.from(new Array(Math.round(this.props.maxValue/365)), (value, index)=>index+1);
+      for(let i in listTickValues){
+        listTickValues[i]= listTickValues[i]*365;
+      }
+
+     return (
+        <div>
+        <VictoryChart
+        padding={{ top: 15, left: 40, right: 60, bottom: 10 }}
+        theme={VictoryTheme.material}
+        width={400}
+        height={200}
+        scale={{x:"time", y:"frequency"}}
+        maxDomain={{x:this.state.maxValue,y:1.0}}
+        minDomain={{x:0,y:0}}
+        style={{
+          parent:{
+            fontSize: 6.5, style: "italic"
+          }
+        }}
+        containerComponent={
+          <VictoryZoomVoronoiContainer
+            zoomDimension="x"
+            zoomDomain={this.state.zoomDomain}
+            onZoomDomaininChange={this.handleZoom.bind(this)}
+            />
+          }
+        >
+
+        {/* Y AXIS */}
+        <VictoryAxis 
+            orientation="left"
+            theme={VictoryTheme.material}
+            label = "Frequency"
+            axisLabelComponent={<VictoryLabel dy= {-20}/>}
+            domain={[0,1]}
+            style={{
+              grid:{stroke: "grey"},
+              axis: {stroke: "#595959"},
+              axisLabel:{fontSize: 8, style: "italic"},
+              ticks: {stroke:"grey", size:3},
+              tickLabels:{fontSize:6, padding:5}
+            }}
+        />
+
+        {/* X AXIS */}
+        <VictoryAxis dependantAxis/>
+        
+
+        {this.state.dataSetsToRender.length>0 && this.state.dataSetsToRender.map((dataSet: any,i: any)=>(
+            this.state.dataSets.includes(dataSet)==false?(
+            <VictoryGroup key={dataSet[0]}
+            data={this.formatDataForVictoryChart(dataSet[1])} 
+            color={dataSet[2]}
+            x="a"
+            y="b"
+            labels={(d: { b: any; })=>[`Gene: ${dataSet[0]}`,`f: ${String(Math.round(d.b*100)/100)}`]}
+            labelComponent={
+                <VictoryTooltip
+                  cornerRadius={0.2}
+                  pointerWidth={0.8}
+                  borderWidth={0.1}
+                  flyoutStyle={{
+                    fill:"white",
+                    border:{stroke:"#e6e6e6"},
+                    width:0.1
+                  }}
+                  style={{
+                    fontSize:4,
+                    border:{stroke:"#e6e6e6"},
+                    borderWidth:0.1 
+                  }}
+                />
+              }
+            >
+            <VictoryLine/>
+            <VictoryScatter/>
+          </VictoryGroup>
+          ):null
+          ))}
+
+        <VictoryScatter
+          data={this.props.data} 
+          color="#669900"
+          style={{data:{opacity:0.5}}}
+          x="a"
+          y="b"
+          labels={(d: { b: any; a: any })=>[`START_DATE: ${d.a}`,`f: ${String(Math.round(d.b*100)/100)}`]}
+          labelComponent={
+              <VictoryTooltip
+                cornerRadius={0.2}
+                pointerWidth={0.8}
+                borderWidth={0.1}
+                flyoutStyle={{
+                  fill:"white",
+                  border:{stroke:"#e6e6e6"},
+                  width:0.1
+                }}
+                style={{
+                  fontSize:4,
+                  border:{stroke:"#e6e6e6"},
+                  borderWidth:0.1 
+                }}
+            />
+            }
+          />
+          
+        </VictoryChart>
+
+        {/*
+              SCROLLBAR GRAPH
+          */}
+          <VictoryChart
+            padding={{ top: 0, left: 40, right: 60, bottom: 30 }}
+            width={400} height={50} scale={{ x: "timepoints" }}
+            maxDomain={{x:this.props.maxValue,y:1.0}}
+            minDomain={{x:0,y:0}}
+            containerComponent={
+              <VictoryBrushContainer
+                brushDimension="x"
+                brushDomain={this.state.zoomDomain}
+                onBrushDomainChange={this.handleZoom.bind(this)}
+              />
+            }
+          >
+            <VictoryAxis
+            label="Timepoints"
+            axisLabelComponent={<VictoryLabel className="labels" dy= {-5} />}
+            tickValues = {listTickValues}
+            tickFormat = {(t:any)=>`${Math.round(((t/365)*100)/100)}y`}
+            style={{
+              axis: {stroke: "grey"},
+              grid:{stroke: "grey"},
+              axisLabel:{
+                fontSize: 8, 
+                style: "italic"},
+              ticks: {stroke:"grey", size:3},
+              tickLabels:{fontSize:5, padding:5}
+            }}
+            
+            />
+            
+          </VictoryChart>
+          </div>
+        
+      );
+
+    }
+}

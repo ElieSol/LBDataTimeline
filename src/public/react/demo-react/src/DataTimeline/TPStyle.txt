@@ -1,0 +1,76 @@
+.chart-container{
+    display: flex;
+    width: 300px;
+    height: 150px;
+    flex-wrap:nowrap;
+}
+
+.chart1{
+    display: flex;
+    width: 300px;
+    height: 150px;
+    justify-content: flex-start;
+    flex-wrap:nowrap;
+}
+
+.dropdown-menu{
+    height: 70px;
+    overflow-y: scroll;
+}
+
+input{
+    width: 300px;
+    box-sizing: content-box;
+}
+
+.Gene-Container{
+    height: 300px;
+    width: 300px;
+}
+
+.labels{
+    display: block;
+    height: 60px;
+    width: 60px;
+    line-height: 60px;
+
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+
+    background-color: black;
+    border-color: black;
+    color: white;
+}
+
+#title{
+    display:flex;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size-adjust: inherit;
+}
+
+
+.h1{
+    text-align: center;
+}
+
+.mutInfo{
+    height: 100px;
+    width: 100px;
+}
+
+.Comp_bt1{
+    justify-content: center;
+}
+
+.Comp_bt2{
+    justify-content: center;
+}
+
+.Comp_bt3{
+    justify-content: center;
+}
+
+.MutMatrix{
+    display: flex;
+    justify-content: center;
+}

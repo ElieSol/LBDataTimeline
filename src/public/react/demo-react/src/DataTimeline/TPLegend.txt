@@ -1,0 +1,54 @@
+/*
+  Script to render the legend of the timeline graph
+*/
+import * as React from 'react';
+import {VictoryChart, VictoryLegend} from 'victory';
+
+export type TPLegendProps = {
+    data?: any;
+}
+
+export type TPLegendState = {
+
+}
+
+export class TPLegend extends React.Component<TPLegendProps, TPLegendState>{
+    public constructor(props: TPLegendProps){
+        super(props);
+    }
+
+    private getDataForLegendDisplay(datasets:any){
+        let data_list: any = [];
+        let i = 0;
+         for(let datas in datasets){
+             let dict: any = {};
+             dict['label']=datasets[datas][0];
+             let dictOfdict:any = dict['symbol']={};
+             dictOfdict['fill']=datasets[datas][2];
+             dict['name']=datasets[datas][0];
+             data_list.push(dict);
+             i+=1;
+         }
+         return data_list;
+    }
+
+    render(){
+        return(
+            <div>
+            {this.getDataForLegendDisplay(this.props.data)>0 && (
+                <VictoryLegend 
+                  x={350} y={75}
+                  centerTitle
+                  orientation="vertical"
+                  style={{
+                    border: {stroke:"grey"},
+                    title: {fontSize: 5},
+                    labels: {fontSize:5}
+                  }}
+                  data={this.getDataForLegendDisplay(this.props.data)}
+                />)
+            }
+            </div>
+        );
+    }
+}

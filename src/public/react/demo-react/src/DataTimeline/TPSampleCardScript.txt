@@ -1,0 +1,31 @@
+/*
+  Script to render the samples card info
+*/
+import * as React from 'react';
+
+export type TPSampleCardProps = {
+  dataToDisplay?:any;
+}
+
+export type TPSampleCardState = {
+  dataToDisplay: any;
+}
+
+export class TPSampleCard extends React.Component {
+
+    public constructor(props:any){
+        super(props);
+
+        this.state = {
+          dataToDisplay:[],
+        };
+    }
+
+  render(){
+
+    return(
+      
+      null
+    )
+  }   
+}

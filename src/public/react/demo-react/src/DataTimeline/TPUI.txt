@@ -1,0 +1,60 @@
+/*
+    Script to manage the UI part
+*/
+import * as React from 'react';
+import Select from 'react-select';
+import * as Color from 'react-color';
+
+export type TPUIProps = {
+    data?: any; 
+    inputData?: any;
+}
+
+export type TPUIState = {
+    multiValues: [],
+    filterOptions: any,
+}
+
+
+export class TPUI extends React.Component<TPUIProps,TPUIState>{
+    public constructor(props:any){
+        super(props)
+
+        this.state = {
+            multiValues: [],
+            filterOptions: this.props.data
+        }
+        this.handleMultiChange = this.handleMultiChange.bind(this);
+    }
+
+    public getCurrentInputValue(multiValues:any){
+        return multiValues;
+    }
+
+    handleMultiChange (multiValues: any) {this.setState( () =>{ 
+        this.props.inputData(multiValues);
+        return {
+          multiValues,
+        };
+      });
+    }
+
+    public getInputData(){
+        return this.state.multiValues;
+    } 
+
+    render(){
+      return(
+        <Select
+          name="select"
+          placeholder="Select Gene(s) to display:"
+          value={this.state.multiValues}
+          options={this.state.filterOptions}
+          onChange={this.handleMultiChange}
+          className="basic-multi-select"
+          clearable={true}
+          multi={true}
+      />
+    )
+  }
+}

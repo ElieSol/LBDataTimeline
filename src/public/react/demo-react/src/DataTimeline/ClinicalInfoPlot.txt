@@ -1,0 +1,40 @@
+/*
+  Script to render the clinical info graph
+*/
+import * as React from 'react';
+import {createContainer, VictoryLabel, VictoryGroup, VictoryTooltip, VictoryVoronoiContainer, VictoryLegend, VictoryTheme, VictoryScatter, VictoryChart, VictoryLine, VictoryAxis, VictoryBrushContainer} from 'victory';
+
+
+export type ClinicalInfoPlotProps = {
+
+}
+
+export type ClinicalInfoPlotState = {
+
+}
+
+export class ClinicalInfoPlot extends React.Component<ClinicalInfoPlotProps, ClinicalInfoPlotState>{
+
+    public constructor(props: ClinicalInfoPlotProps){
+        super(props);
+
+        this.state = {
+
+        }
+    }
+
+    public static defaultProps = {
+
+    }
+
+    render () {
+
+        return (
+            <div>
+                <VictoryChart/>
+            </div>
+        );
+    }
+
+
+}
