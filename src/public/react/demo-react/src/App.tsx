@@ -18,6 +18,10 @@ const App: React.FC = () => {
         <TimelinePlot/>
       </div>
 
+      <div className="External-UI">
+        <Button className="Button">Import Data</Button>
+      </div>
+
       <footer className="App-footer">
         <p>Application powered by <code>React</code></p>
       </footer>

@@ -4,6 +4,7 @@
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
+  justify-content: left;
   height: 10vmin;
   pointer-events: none;
 }
@@ -26,7 +27,7 @@
   flex-direction: column, row;
   align-items: center;
   justify-content: center;
-  font-size: calc(8px + 2vmin);
+  font-size: calc(5px + 2vmin);
   color: white;
 }
 
@@ -40,6 +41,10 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+.Button {
+  
 }
 
 @keyframes App-logo-spin {
