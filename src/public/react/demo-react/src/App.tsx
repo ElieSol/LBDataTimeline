@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import {Button} from 'reactstrap';
+import {TimelinePlot} from './DataTimeline/TimelinePlot'
 
 const App: React.FC = () => {
   return (
@@ -13,9 +14,13 @@ const App: React.FC = () => {
           
         </p>
       </header>
-      <div className="App-Background">
-      
+      <div className="Plot-Display">
+        <TimelinePlot/>
       </div>
+
+      <footer className="App-footer">
+        <p>Application powered by <code>React</code></p>
+      </footer>
     </div>
   );
 }
