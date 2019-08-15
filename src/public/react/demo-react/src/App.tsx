@@ -3,7 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 
 import {Button} from 'reactstrap';
-import {TimelinePlot} from './DataTimeline/TimelinePlot'
+import {ChartPanel} from './ChartPanel/ChartPanel';
+import {TimelinePlot} from './ChartPanel/TimelinePlot';
 
 const App: React.FC = () => {
   return (
@@ -11,12 +12,13 @@ const App: React.FC = () => {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          
+          Timeline View
         </p>
       </header>
-      <div className="Plot-Display">
-        <TimelinePlot/>
-        <Button className="Button">Import Data</Button>
+      <div className="Background-Display">
+          <Button color="primary" className="button">Import Local Data</Button>
+          <hr style={{color:"blue", height: 2}}/>
+          <Button color="primary" className="button">Import Data from cBioportal</Button>
       </div>
 
       
