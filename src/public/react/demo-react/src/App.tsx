@@ -21,6 +21,16 @@ class ImportDisplay extends React.Component{
   }
 }
 
+class ChartDisplay extends React.Component{
+  render(){
+    return (
+    <div className="Background-Display">
+          <ChartPanel/>
+    </div>
+    )
+  }
+}
+
 const App: React.FC = () => {
 
   return (
