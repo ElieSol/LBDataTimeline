@@ -42,7 +42,7 @@ export class TimelinePlot extends React.Component<TimelinePlotProps, TimelinePlo
     }
 
     componentDidUpdate() {
-        this.plotExists = !!this.getSvg();
+        //this.plotExists = !!this.getSvg();
     }
 
     // MT TO MANAGE THE ZOOM
@@ -103,63 +103,25 @@ export class TimelinePlot extends React.Component<TimelinePlotProps, TimelinePlo
 
                 {/*
               SCROLLBAR GRAPH
-         
+                    */}
                 <VictoryChart
-                    padding={{ top: 0, left: 40, right: 60, bottom: 30 }}
+                    name="ScrollBar"
+                    padding={{ top: 10, left: 40, right: 60, bottom: 35 }}
                     width={400} 
                     height={50}
-                    maxDomain={{x:maxValue,y:1}}
-                    minDomain={{x:0,y:-0.05}}
-                    containerComponent={
-                    <VictoryBrushContainer
-                        brushDimension="x"
-                        brushDomain={this.state.zoomDomain}
-                        onBrushDomainChange={this.handleZoom.bind(this)}
-                    />
-                    }
                 >
                     <VictoryAxis
                         label="Timeline"
-                        axisLabelComponent={<VictoryLabel className="labels" dy= {-5} />}
-                        tickValues = {listTickValues}
-                        tickFormat = {(t:any)=>`${Math.round((t/365)*100)/100}y`}
+                        tickFormat = {()=>``}
                         style={{
                             axis: {stroke: "grey"},
-                            grid:{stroke: "grey"},
-                            axisLabel:{
-                                fontSize: 8, 
-                                style: "italic"},
-                                ticks: {stroke:"grey", size:3},
-                                tickLabels:{fontSize:5, padding:5}
+                            grid: {stroke: "grey"},
+                            axisLabel: {color:"grey" }
                             }}
                     />
 
-
-                    <VictoryAxis
-                        orientation="top"
-                        tickFormat = {()=>``}
-                        style={{
-                            axis: {stroke: "grey"}
-                        }}
-                    />
-
-                    <VictoryAxis
-                        orientation="left"
-                        tickFormat = {()=>``}
-                        style={{
-                            axis: {stroke: "grey"}
-                        }}
-                    />
-
-                    <VictoryAxis
-                        orientation="right"
-                        tickFormat = {()=>``}
-                        style={{
-                            axis: {stroke: "grey"}
-                        }}
-                    />
                 </VictoryChart>
-                 */}
+                 
             </div>
         )
     }
