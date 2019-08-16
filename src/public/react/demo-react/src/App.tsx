@@ -4,76 +4,137 @@ import ReactDOM from 'react-dom';
 import './App.css';
 import { Route, BrowserRouter as Router, Link } from 'react-router-dom';
 
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import { Table, TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import {ChartPanel} from './ChartPanel/ChartPanel';
-import {TimelinePlot} from './ChartPanel/TimelinePlot';
 import classnames from 'classnames';
 
 class ImportDisplay extends React.Component{
   render(){
     return (
     <div className="Background-Display">
+          <Button color="primary" className="button" >Load Sample Data</Button>
           <Button color="primary" className="button" >Import Local Data</Button>
-          <hr style={{color:"blue", height: 2}}/>
           <Button color="primary" className="button">Import Data from cBioportal</Button>
     </div>
     )
   }
 }
 
-class ChartDisplay extends React.Component{
-  render(){
-    return (
-    <div className="Background-Display">
-          <ChartPanel/>
-    </div>
-    )
-  }
+export type AppState = {
+  activeTab : any;
 }
 
-const App: React.FC = () => {
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Timeline View
-        </p>
-      </header>
-      <Nav tabs>
-        <NavItem>
-          <NavLink to="/">
-            Import
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink>
-            Information
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink>
-            Chart Display
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink>
-            Help
-          </NavLink>
-        </NavItem>
-      </Nav>
+export type AppProps = {
+}
 
-      <Router>
-        <Route exact path="/" component={ImportDisplay}></Route>
-      </Router>
-      
 
-      <footer className="App-footer">
-        <p>Application powered by <code>React</code></p>
-      </footer>
-    </div>
-  );
+class App extends React.Component<AppProps,AppState>{
+  constructor(props:AppProps){
+    super(props);
+
+    this.toggle = this.toggle.bind(this);
+
+    this.state = {
+      activeTab: '1'
+    };
+
+  }
+
+
+  toggle(tab:any){
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      })
+    }
+  }
+
+
+  render(){
+    return (
+      <div className="App">
+        <header className="App-header">
+         <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Timeline View
+          </p>
+        </header>
+        <Nav tabs>
+          <NavItem>
+            <NavLink className={classnames({active: this.state.activeTab ==='1'})} onClick={()=>{this.toggle('1')}}   to="/">
+              Import
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink className={classnames({active: this.state.activeTab ==='2'})} onClick={()=>{this.toggle('2')}}  >
+             Information
+            </NavLink>
+          </NavItem>
+          <NavItem>
+           <NavLink className={classnames({active: this.state.activeTab ==='3'})} onClick={()=>{this.toggle('3')}}   to="/ChartDisplay">
+              Chart Display
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink className={classnames({active: this.state.activeTab ==='4'})} onClick={()=>{this.toggle('4')}}>
+             Help
+            </NavLink>
+          </NavItem>
+        </Nav>
+
+        <TabContent activeTab={this.state.activeTab}>
+          <TabPane tabId="2">
+            <Table bordered>
+              <thead>
+                <tr>
+                  <th>GENE ID</th>
+                  <th>MUTATION</th>
+                  <th>POSITION</th>
+                  <th>COVERAGE</th>
+                  <th>VAF</th>
+                </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
+            </Table>
+          </TabPane>
+        </TabContent>
+
+
+        <TabContent activeTab={this.state.activeTab}>
+          <TabPane tabId="3">
+            <ChartPanel/>
+          </TabPane>  
+        </TabContent>
+
+        <TabContent activeTab={this.state.activeTab}>
+          <TabPane tabId="1">
+            <ImportDisplay/>
+          </TabPane>  
+        </TabContent>
+
+        
+
+        <footer className="App-footer">
+         <p>Application powered by <code>React</code></p>
+        </footer>
+      </div>
+    );
+
+    async function callExpress() {
+      try {
+        let response = await fetch('/api/say-hello/SeanMaxwell')
+                              .then(res => res.json());
+        alert('Hi this is a response from the backend: ' + response.response);
+      } catch (err) {
+        alert(err);
+      }
+    }
+
+    callExpress();
+  }
 }
 
 export default App;

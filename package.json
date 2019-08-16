@@ -4,16 +4,28 @@
   "description": "Visualization of liquid biopsy data over time",
   "main": "start.ts",
   "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "ts-node ./src/start.ts test",
+    "eject": "react-scripts eject",
     "start-dev": "nodemon --config \"./util/nodemon.json\"/"
   },
+  "proxy": "http://localhost:3000/",
+  "eslintConfig": {
+    "extends": "react-app"
+  },
   "devDependencies": {
+    "@types/jasmine": "^3.4.0",
     "@types/jest": "^24.0.17",
     "@types/node": "^12.7.2",
     "@types/react": "^16.9.1",
     "@types/react-dom": "^16.8.5",
     "@types/react-router-dom": "^4.3.4",
+    "@types/supertest": "^2.0.8",
     "eslint-plugin-react-hooks": "^1.7.0",
+    "jasmine": "^3.4.0",
     "nodemon": "^1.19.1",
+    "supertest": "^4.0.2",
     "ts-node": "^8.3.0",
     "tslint": "^5.18.0",
     "typescript": "^3.5.3"
@@ -29,9 +41,11 @@
     "@types/react-select": "^3.0.2",
     "@types/reactstrap": "^8.0.1",
     "@types/victory": "^31.0.21",
+    "autobind-decorator": "^2.4.0",
     "boostrap": "^2.0.0",
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
+    "mobx": "^5.13.0",
     "react": "^16.9.0",
     "react-bootstrap": "^1.0.0-beta.11",
     "react-color": "^2.17.3",
@@ -40,6 +54,7 @@
     "react-select": "^3.0.4",
     "react-transition-group": "^4.2.2",
     "reactstrap": "^8.0.1",
+    "save-svg-as-png": "^1.4.14",
     "victory": "^32.3.6",
     "webpack-dev-server": "3.2.1"
   }
