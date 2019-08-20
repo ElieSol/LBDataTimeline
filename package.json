@@ -4,8 +4,8 @@
   "description": "Visualization of liquid biopsy data over time",
   "main": "start.ts",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "npm install --only=prod && NODE_ENV=production node start.ts",
+    "build": "sh ./util/prodBuild.sh",
     "test": "ts-node ./src/start.ts test",
     "eject": "react-scripts eject",
     "start-dev": "nodemon --config \"./util/nodemon.json\"/"

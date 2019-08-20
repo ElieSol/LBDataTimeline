@@ -18,11 +18,31 @@ class SimpleServer extends Server {
         this.app.use(bodyParser.urlencoded({extended: true}));
         super.addControllers(new controllers.SimpleController());
         // Point to front-end code
+        this.setupControllers();
+        // Point to front-end code
+        if (process.env.NODE_ENV !== 'production') {
+            this.app.get('*', (req, res) => res.send(this.DEV_MSG));
+        } else {
+            this.serveFrontEndProd();
+        }
+        /*
         if (process.env.NODE_ENV !== 'production') {
             console.log('Starting server in development mode');
             const msg = this.DEV_MSG + process.env.EXPRESS_PORT;
             this.app.get('*', (req, res) => res.send(msg));
         }
+        */
+    }
+
+    private serveFrontEndProd(): void {
+        const dir = path.join(__dirname, 'public/react/demo-react/');
+        // Set the static and views directory
+        this.app.set('views',  dir);
+        this.app.use(express.static(dir));
+        // Serve front-end content
+        this.app.get('*', (req, res) => {
+            res.sendFile('index.html', {root: dir});
+        });
     }
 
     private setupControllers(): void {
