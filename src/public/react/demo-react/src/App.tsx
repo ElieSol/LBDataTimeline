@@ -7,12 +7,18 @@ import { Route, BrowserRouter as Router, Link } from 'react-router-dom';
 import { Table, TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import {ChartPanel} from './ChartPanel/ChartPanel';
 import classnames from 'classnames';
+import {PythonShell} from 'python-shell';
 
 class ImportDisplay extends React.Component{
+  importMockData(){
+    let mutInfos = new PythonShell('/home/julies/Internship_Project/LBDataTimeline/src/public/react/demo-react/src/import/importMockData.py');
+    console.log("Mutation Informations")
+  }
+
   render(){
     return (
     <div className="Background-Display">
-          <Button color="primary" className="button" >Load Sample Data</Button>
+          <Button color="primary" className="button" onClick={this.importMockData.bind(this)}>Load Sample Data</Button>
           <Button color="primary" className="button" >Import Local Data</Button>
           <Button color="primary" className="button">Import Data from cBioportal</Button>
     </div>
