@@ -14,10 +14,11 @@ npm run start
 Unit test run :
 
 ```bash
-npm test -- "path to the unit-test file" (i.e. controllers/DemoController)}
+npm test -- \path\to\unit-test-file (i.e. controllers/DemoController)}
 ```
 
 # Mutation data format in cBioportal
+```
 export type Mutation = {
     'aminoAcidChange': string
 
@@ -93,3 +94,4 @@ export type Mutation = {
 
         'variantType': string
 };
+```
