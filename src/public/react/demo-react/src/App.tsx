@@ -8,11 +8,12 @@ import { Table, TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTi
 import {ChartPanel} from './ChartPanel/ChartPanel';
 import classnames from 'classnames';
 import {PythonShell} from 'python-shell';
+import { any } from 'prop-types';
 
 class ImportDisplay extends React.Component{
   importMockData(){
-    let mutInfos = new PythonShell('/home/julies/Internship_Project/LBDataTimeline/src/public/react/demo-react/src/import/importMockData.py');
-    console.log("Mutation Informations")
+    PythonShell.run('/home/julies/Internship_Project/LBDataTimeline/src/public/react/demo-react/src/import/importMockData.py');
+    //console.log("Mutation Informations = "+mutInfos)
   }
 
   render(){
@@ -98,6 +99,7 @@ class App extends React.Component<AppProps,AppState>{
                   <th>MUTATION</th>
                   <th>POSITION</th>
                   <th>COVERAGE</th>
+                  <th>SUPPORT READS</th>
                   <th>VAF</th>
                 </tr>
               </thead>
@@ -131,14 +133,12 @@ class App extends React.Component<AppProps,AppState>{
 
     async function callExpress() {
       try {
-        let response = await fetch('/api/say-hello/SeanMaxwell')
-                              .then(res => res.json());
-        alert('Hi this is a response from the backend: ' + response.response);
+        let response = await fetch('/api/say-hello/SeanMaxwell').then(res => res.json());
+        alert('Backend response: ' + response.response);
       } catch (err) {
         alert(err);
       }
     }
-
     callExpress();
   }
 }
