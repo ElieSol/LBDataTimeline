@@ -1,8 +1,5 @@
 {
     "extends": "tslint:recommended",
-    "plugins": [
-      "react-hooks"
-     ],
     "rules": {
       "max-line-length": {
         "options": [100]
@@ -12,8 +9,6 @@
       "object-literal-sort-keys": false,
       "ordered-imports": false,
       "quotemark": [true, "single"],
-      "variable-name": [true, "allow-leading-underscore"],
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn"
+      "variable-name": [true, "allow-leading-underscore"]
     }
   }
